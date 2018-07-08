@@ -1,0 +1,53 @@
+html * {
+  margin: 0;
+  padding: 0;
+}
+
+#sec {
+  background: blue;
+  border-top: 1px solid transparent;
+}
+#sec .child {
+  background: red;
+  height: 100px;
+  margin-top: 10px;
+}
+
+#margin {
+  background: blue;
+  overflow: hidden;
+  margin-top: 20px;
+}
+#margin p {
+  margin: 5px auto 25px;
+  background: red;
+}
+
+#layout {
+  background: red;
+  margin-top: 20px;
+}
+#layout .left {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background: blue;
+}
+#layout .right {
+  height: 110px;
+  background: green;
+  overflow: hidden;
+}
+
+#float {
+  margin-top: 20px;
+  background: red;
+  overflow: hidden;
+}
+#float .float {
+  float: left;
+  font-size: 30px;
+  background: blue;
+}
+
+/*# sourceMappingURL=box.css.map */

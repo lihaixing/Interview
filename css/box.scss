@@ -1,0 +1,55 @@
+@charset "utf-8";
+html * {
+  margin: 0;
+  padding: 0;
+}
+
+#sec {
+  background: blue;
+  //overflow: hidden;
+  border-top: 1px solid transparent;
+  .child {
+    background: red;
+    height: 100px;
+    margin-top: 10px;
+  }
+}
+
+// BFC垂直方向边距重叠
+#margin {
+  background: blue;
+  overflow: hidden;
+  margin-top: 20px;
+  p {
+    margin: 5px auto 25px;
+    background: red;
+  }
+}
+
+#layout {
+  background: red;
+  margin-top: 20px;
+  .left {
+    float: left;
+    width: 100px;
+    height: 100px;
+    background: blue;
+  }
+  .right {
+    height: 110px;
+    background: green;
+    // 创建了BFC,不在与float元素重叠
+    overflow: hidden;
+  }
+}
+
+#float {
+  margin-top: 20px;
+  background: red;
+  overflow: hidden;
+  .float {
+    float: left;
+    font-size: 30px;
+    background: blue;
+  }
+}

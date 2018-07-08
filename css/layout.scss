@@ -1,0 +1,120 @@
+@charset "utf-8";
+html * {
+  padding: 0;
+  margin: 0;
+}
+.layout {
+  article div {
+    min-height: 100px;
+  }
+  &.float {
+    .left {
+      float: left;
+      width: 300px;
+      background: red;
+    }
+    .right {
+      width: 300px;
+      background: blue;
+      float: right;
+    }
+    .center {
+      background: yellow;
+    }
+  }
+  &.absolute {
+    margin-top: 20px;
+    article {
+      position: relative;
+      min-height: 100px;
+      min-width: 600px;
+      .left {
+        position: absolute;
+        width: 300px;
+        background: red;
+        left: 0;
+        top: 0;
+      }
+      .right {
+        width: 300px;
+        background: blue;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      .center {
+        // 第一种方法
+        //width: calc(100% - 600px);
+        //margin-left: 300px;
+
+        // 第2种方法
+        left: 300px;
+        right: 300px;
+        position: absolute;
+        background: yellow;
+      }
+    }
+  }
+  &.flexBox {
+    margin-top: 20px;
+    article {
+      display: flex;
+      min-width: 600px;
+      .left {
+        width: 300px;
+        flex: 0 0 300px;
+        background: red;
+      }
+      .right {
+        width: 300px;
+        background: blue;
+        flex: 0 0 300px;
+      }
+      .center {
+        flex: 1 1 auto;
+        background: yellow;
+      }
+    }
+  }
+  &.table {
+    margin-top: 20px;
+    article {
+      display: table;
+      min-width: 600px;
+      width: 100%;
+      .left {
+        display: table-cell;
+        width: 300px;
+        background: red;
+      }
+      .right {
+        width: 300px;
+        display: table-cell;
+        background: blue;
+      }
+      .center {
+        background: yellow;
+        display: table-cell;
+      }
+    }
+  }
+  &.grid {
+    margin-top: 20px;
+    article {
+      display: grid;
+      min-width: 600px;
+      width: 100%;
+      grid-template-rows: 100px;
+      grid-template-columns:300px auto 300px;
+      .left {
+        background: red;
+      }
+      .right {
+        background: blue;
+      }
+      .center {
+        background: yellow;
+      }
+    }
+  }
+}

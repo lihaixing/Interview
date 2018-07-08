@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>面向对象</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    /**
+     *类的声明
+     */
+    function Animal () {
+        this.name = 'name'
+    }
+
+    /**
+     * ES6
+     */
+    class Animal2 {
+        constructor () {
+            this.name = 'name'
+        }
+    }
+
+    /*
+    * 实例化
+    * */
+    console.log(new Animal(), new Animal2())
+
+    /**
+     * 借助构造函数实现继承
+     * 缺点：不能形成链，只不过把parent中的属性复制了过来
+     */
+    function Parent1 () {
+        this.name = 'parent1'
+        this.play = [1, 2, 3]
+    }
+
+    function Child1 () {
+        Parent1.call(this)
+        this.type = 'child1'
+    }
+
+    var son1 = new Child1();
+    var son11 = new Child1();
+
+    /**
+     * 借助原型链实现继承
+     * 缺点：因为父类中的引用类型数据时共用的，导致某个子类改变数据，其它子类的数据也改变
+     */
+    function Parent2 () {
+        this.name = 'parent2'
+        this.play = [1, 2, 3]
+    }
+
+    function Child2 () {
+        this.type = 'child2'
+    }
+
+    Child2.prototype = new Parent2()
+    Parent2.prototype.say = function () {
+        console.log('say')
+    }
+    var son2 = new Child2();
+    var son22 = new Child2();
+
+    /**
+     * 结合以上两种方法实现继承
+     * 缺点：虽然解决了各自的缺点，但父类执行了两次
+     */
+    function Parent3 () {
+        this.name = 'parent3'
+        this.play = [1, 2, 3]
+    }
+
+    function Child3 () {
+        Parent3.call(this)
+        this.type = 'child3'
+    }
+
+    Child3.prototype = new Parent3()
+    Parent3.prototype.say = function () {
+        console.log('say')
+    }
+    var son3 = new Child3();
+    var son33 = new Child3();
+    console.log(Child3.prototype.constructor)
+
+    /**
+     * 依然结合两种方法实现继承，不过父类要执行一次
+     * 缺点：这种原型赋值，直接导致构造函数混乱
+     */
+    function Parent4 () {
+        this.name = 'parent4'
+        this.play = [1, 2, 3]
+    }
+
+    function Child4 () {
+        Parent4.call(this)
+        this.type = 'child3'
+    }
+
+    // Child4.prototype.__proto__ = Parent4.prototype
+    Child4.prototype = Parent4.prototype // 这个赋值相当于把child4的构造器也改成了Parents的构造器
+    Child4.prototype.constructor = Child4
+    Parent4.prototype.say = function () {
+        console.log('say')
+    }
+    var son4 = new Child4();
+    var son44 = new Child4();
+    console.log(son4 instanceof Child4, son4 instanceof Parent4)
+    console.log(Child4.prototype.constructor, Parent4.prototype.constructor)
+
+    /**
+     * 依然结合两种方法实现继承，object.create
+     * 缺点：
+     */
+    function Parent5 () {
+        this.name = 'parent5'
+        this.play = [1, 2, 3]
+    }
+
+    function Child5 () {
+        Parent5.call(this)
+        this.type = 'child5'
+    }
+
+
+    Child5.prototype = Object.create(Parent5.prototype);
+    Child5.prototype.constructor = Child5;
+    Parent5.prototype.say = function () {
+        console.log('say')
+    }
+    var son5 = new Child5();
+    var son55 = new Child5();
+    console.log(son5 instanceof Child5, son5 instanceof Parent5)
+    console.log(Child5.prototype.constructor, Parent5.prototype.constructor)
+
+</script>
+</body>
+</html>

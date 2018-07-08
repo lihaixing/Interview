@@ -1,0 +1,12 @@
+### 创建对象有几种方法
+    var o1 = {name:'lihaixing'};
+    var o11 = new Object({name:'lihaixing'});
+
+    var M = function(){this.name='haixing'};
+    var o2 = new M();
+
+    var P = {name:'haixing'};
+    var o3 = Object.create(P);
+### 原型、构造函数、实例、原型链等
+### instanceof的原理
+### new 运算符

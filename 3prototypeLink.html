@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原型链</title>
+</head>
+<body>
+<script>
+    var o1 = {
+        name: 'lihaixing'
+    };
+    var o11 = new Object({
+        name: 'lihaixing'
+    });
+
+    var M = function () {
+        this.name = 'haixing';
+        // return {}
+    };
+    var o2 = new M();
+    console.log(M.prototype.constructor === M); // true
+    console.log(M.prototype === o2.__proto__); // true
+    console.log(M.prototype.__proto__ === Object.prototype); // true
+    console.log(M.__proto__ === Function.prototype); // true
+    console.log(o2 instanceof M); // true * instanceof 表示对象的构造函数是是否是M
+    console.log(M.prototype instanceof Object); // true *
+    console.log(o2 instanceof Object); // true * 只要一条链上就可以
+
+
+    M.prototype.say = function () {
+        console.log('say Hi');
+    }
+    var o5 = new M('o5');
+
+    var P = {
+        name: 'haixing'
+    };
+    var o3 = Object.create(P);
+
+    // new一个对象的原理
+    var NEW = function (func) {
+        var obj = Object.create(func.prototype);
+        var k = func.call(obj);
+        if (typeof k === 'object') {
+            console.log(123)
+            return k;
+        } else {
+            return obj;
+        }
+    }
+    var ss = NEW(M);
+</script>
+</body>
+</html>
