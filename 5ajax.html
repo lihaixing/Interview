@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ajax</title>
+    <script src="./interviewSource/source/jsonp.js"></script>
 </head>
 <body>
 <script>
@@ -20,16 +21,14 @@
 
     function jsonAjax (option) {
         var opt = {
-            'type': 'GET',
-            'url': '',
-            'data': {},
-            'success': function (res) {
-                alert(1)
-                res = JSON.parse(res);
-                console.log(JSON.stringify(res, null, '   '));
+            type: 'GET',
+            url: '',
+            data: {},
+            success: function (res) {
+                console.log(JSON.stringify(JSON.parse(res), null, '   '));
             },
-            'error': function (res) {
-                res = JSON.parse(res);
+            error: function (res) {
+                // res = JSON.parse(res);
                 console.log(JSON.stringify(res, null, '   '));
             }
         };
@@ -40,26 +39,67 @@
         for (var k in data) {
             dataArr.push(k + '=' + data[k]);
         }
-        debugger
         if (opt.url) {
             var url = opt.url;
             if (type === 'GET') {
                 url += '?' + dataArr.join('&');
+                url = url.replace(/\?$/g, '')
             }
             if (type === 'POST') {
-                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             }
             xhr.open(type, url, true);
+            /*
+            * 这里用onreadystatechange必须用readyState===4;或者用onload
+            * */
             xhr.onreadystatechange = function () {
-                console.log(xhr.status)
-                if (xhr.status === 200 || xhr.status === 304) {
-                    alert(2)
+                if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)) {
                     opt.success(xhr.response);
                 } else {
                     opt.error(xhr.response);
                 }
             };
             xhr.send(type === 'POST' ? dataArr.join('&') : null);
+        }
+    }
+
+    function jsonp (option) {
+        var opt = {
+            url: '',
+            data: {},
+            callback: '',
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        };
+        extend(opt, option);
+        var url = opt.url;
+        var dataArr = [];
+        var callback = opt.callback + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)
+        dataArr.push('callback=' + callback);
+        window[callback] = function (res) {
+            opt.success(res);
+        };
+        for (var k in dataArr) {
+            url = url + '?' + dataArr.join('&');
+        }
+
+        var script = document.createElement('script');
+        script.setAttribute('type', 'text/javascript');
+        script.setAttribute('src', url);
+        script.async = true;
+        document.body.append(script);
+        script.onload = script.onreadystatechange = function () {
+            if (!script.readyState) {
+                script.parentNode.removeChild(script);
+                window[callback] = null;
+            }
+        }
+        script.onerror = function () {
+            opt.error()
         }
     }
 </script>
