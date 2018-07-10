@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>ajax</title>
+    <script src="./interviewSource/source/jsonp.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" href="./css/5ajax.css">
     <!--<script src="./interviewSource/source/jsonp.js"></script>-->
 </head>
@@ -11,11 +13,11 @@
     <article>
         <h3>这是一个文章</h3>
     </article>
-    <!--<iframe id="myIframe" src="http://localhost:5001/order/order_list.html" frameborder="0" scrolling="no"></iframe>-->
+    <!--<iframe id="myIframe" src="http://192.168.1.4:8888/goods" frameborder="0" scrolling="no"></iframe>-->
 </section>
 <script>
-    var myIframe = document.getElementById('myIframe');
-    var myIframe2 = document.getElementById('myIframe2');
+    // var myIframe = document.getElementById('myIframe');
+    // var myIframe2 = document.getElementById('myIframe2');
 
     /**
      * @description 这里添加hash后，iframe页面添加window.hashchange事件得到hash，便实现了传递
@@ -27,16 +29,16 @@
     // postMessage
     // 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息
     // setTimeout(function () {
-    //     myIframe.contentWindow.postMessage('data', 'http://localhost:5001/order/order_list.html');
+    //     myIframe.contentWindow.postMessage('data', 'http://192.168.1.4:8888/goods');
     // }, 1000);
     // 在窗口B中监听
-    // myIframe2.contentWindow.addEventListener('message', function (event) {
+    // window.addEventListener('message', function (event) {
     //     console.log(event.origin);
     //     console.log(event.source);
     //     console.log(event.data);
     // }, false);
 
-    var ws = new WebSocket('ws://localhost:5001/order/order_list.html');
+    var ws = new WebSocket('ws://192.168.1.4:8888/goods');
     ws.onopen = function (evt) {
         console.log('Connection open ...');
         // ws.send('Hello WebSockets!');
@@ -57,11 +59,11 @@
         }
     }
 
-    function getName(prefix) {
+    function getName (prefix) {
         return prefix + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
     }
 
-    function jsonAjax(option) {
+    function jsonAjax (option) {
         var opt = {
             type: 'GET',
             url: '',
@@ -76,6 +78,7 @@
         };
         extend(opt, option);
         var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        console.log('withCredentials' in xhr);
         var type = opt.type.toUpperCase();
         var data = opt.data, dataArr = [];
         for (var k in data) {
@@ -105,7 +108,7 @@
         }
     }
 
-    function jsonp(option) {
+    function jsonp (option) {
         var opt = {
             url: '',
             data: {},
@@ -135,6 +138,7 @@
         script.async = true;
         document.body.append(script);
         script.onload = script.onreadystatechange = function () {
+            console.log(script.readyState)
             if (!script.readyState) {
                 script.parentNode.removeChild(script);
                 window[callback] = null;
