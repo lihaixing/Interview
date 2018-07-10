@@ -78,6 +78,7 @@
         };
         extend(opt, option);
         var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        console.log('withCredentials' in xhr);
         var type = opt.type.toUpperCase();
         var data = opt.data, dataArr = [];
         for (var k in data) {
