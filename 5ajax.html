@@ -29,10 +29,10 @@
     // postMessage
     // 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息
     // setTimeout(function () {
-    //     myIframe.contentWindow.postMessage('data', 'http://localhost:5001/order/order_list.html');
+    //     myIframe.contentWindow.postMessage('data', 'http://192.168.1.4:8888/goods');
     // }, 1000);
     // 在窗口B中监听
-    // myIframe2.contentWindow.addEventListener('message', function (event) {
+    // window.addEventListener('message', function (event) {
     //     console.log(event.origin);
     //     console.log(event.source);
     //     console.log(event.data);
@@ -59,11 +59,11 @@
         }
     }
 
-    function getName (prefix) {
+    function getName(prefix) {
         return prefix + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
     }
 
-    function jsonAjax (option) {
+    function jsonAjax(option) {
         var opt = {
             type: 'GET',
             url: '',
@@ -107,7 +107,7 @@
         }
     }
 
-    function jsonp (option) {
+    function jsonp(option) {
         var opt = {
             url: '',
             data: {},
