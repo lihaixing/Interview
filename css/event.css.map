@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AACA,MAAO;EACL,MAAM,EAAE,CAAC;EACT,OAAO,EAAE,CAAC;;;AAEZ,GAAG;EACD,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;EACb,UAAU,EAAE,GAAG;EACf,KAAK,EAAE,IAAI;EACX,UAAU,EAAE,MAAM;EAClB,WAAW,EAAE,KAAK",
-"sources": ["event.scss"],
-"names": [],
-"file": "event.css"
-}

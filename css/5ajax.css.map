@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAEE,kBAAM;EACJ,KAAK,EAAE,GAAG;EACV,MAAM,EAAC,KAAK;EACZ,MAAM,EAAE,cAAc",
-"sources": ["5ajax.scss"],
-"names": [],
-"file": "5ajax.css"
-}
