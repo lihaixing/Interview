@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>ajax</title>
+    <script src="./interviewSource/source/jsonp.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" href="./css/5ajax.css">
     <!--<script src="./interviewSource/source/jsonp.js"></script>-->
 </head>
@@ -57,11 +59,11 @@
         }
     }
 
-    function getName(prefix) {
+    function getName (prefix) {
         return prefix + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
     }
 
-    function jsonAjax(option) {
+    function jsonAjax (option) {
         var opt = {
             type: 'GET',
             url: '',
@@ -105,7 +107,7 @@
         }
     }
 
-    function jsonp(option) {
+    function jsonp (option) {
         var opt = {
             url: '',
             data: {},
@@ -135,6 +137,7 @@
         script.async = true;
         document.body.append(script);
         script.onload = script.onreadystatechange = function () {
+            console.log(script.readyState)
             if (!script.readyState) {
                 script.parentNode.removeChild(script);
                 window[callback] = null;
