@@ -1,0 +1,30 @@
+安全类
+    CSRF
+        基本概念和缩写
+            通常称为跨站请求伪造, 造Cross-site request forgery
+        攻击原理
+            A网站的接口存在漏洞
+            用户的确登录过A网站
+        防御措施
+            Token认证：登录成功后会在本地保留taken,请求接口必须携带token,引诱链接只能携带cookie
+            Referer验证：referer指的是页面来源，看请求是否来源于自己站点的页面
+            隐藏令牌：隐藏在http head头中，不放在链接上
+    XSS
+        基本概念和缩写
+            cross-site scripting 跨域脚本攻击
+        攻击原理
+            http://www.imooc.com/learn/812
+            向你的页面注入js脚本
+        防御措施
+            让你的脚本不能执行
+算法类
+    排序
+        快速排序 https://segmentfault.com/a/1190000009426421
+        选择排序 https://segmentfault.com/a/1190000009366805
+        希尔排序 https://segmentfault.com/a/1190000009461832
+        冒泡排序 
+    堆栈、队列、链表
+    递归
+    波兰式和逆波兰式
+
+    可以询问提示、能想到哪儿就写到哪儿，能多写就多写，不会也可以说原理
