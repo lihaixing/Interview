@@ -7,27 +7,134 @@
 </head>
 
 <body>
-    <script>
-        /**
-         * @description 快速排序法
-         */
-        function quickSort(arr) {
-            if (arr.length <= 1) {
-                return arr;
-            }
-            var baseNumIndex = Math.floor(arr.length / 2);
-            var baseNum = arr.splice(baseNumIndex,1)[0];
-            var left = [], right = [];
-            for (var i = arr.length - 1; i >= 0; i--) {
-                if (arr[i] >= baseNum) {
-                    right.push(arr[i]);
-                } else {
-                    left.push(arr[i]);
+<script>
+    function randomArray (n) {
+        var arr = [];
+        for (var i = 0; i < n; i++) {
+            arr.push(Math.floor(Math.random() * (n + 1)));
+        }
+        return arr;
+    }
+
+    var n = 5000;
+    var arr1 = randomArray(n);
+    var arr2 = randomArray(n);
+    var arr3 = randomArray(n);
+    console.log(arr1, arr2, arr3);
+
+    /**
+     * @description 选择排序法: 与第一个元素比较
+     */
+    function selectSort (arr) {
+        var temp;
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[i]) {
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
                 }
             }
-            return quickSort(left).concat([baseNum]).concat(quickSort(right));
         }
-    </script>
+        return arr;
+    }
+
+    /**
+     * @description 冒泡排序法，相邻元素比较
+     * @youhua 优化2：https://github.com/twinkle77/play-with-algorithm/blob/master/01-Sorting-Basic/07-Bubble-Sort/main.js
+     */
+    function bubbleSort (arr) {
+        var temp, isOrder;
+        for (var i = 1; i < arr.length; i++) {
+            isOrder = false; // 优化
+            for (var j = 0; j < arr.length - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    temp = arr[j + 1];
+                    arr[j + 1] = arr[j];
+                    arr[j] = temp;
+                    isOrder = true; // 优化
+                }
+            }
+            // 这是对冒泡排序的优化，如果一直没有替换，说明这是有序的，就不需要在继续比较了
+            if (!isOrder) {
+                break;
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * @description 快速排序法
+     */
+    function quickSort (arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+        var baseNumIndex = Math.floor(arr.length / 2);
+        var baseNum = arr.splice(baseNumIndex, 1)[0];
+        var left = [], right = [];
+        for (var i = arr.length - 1; i >= 0; i--) {
+            if (arr[i] >= baseNum) {
+                right.push(arr[i]);
+            } else {
+                left.push(arr[i]);
+            }
+        }
+        return quickSort(left).concat([baseNum]).concat(quickSort(right));
+    }
+
+    /**
+     * @description 插入排序 相邻有序元素比价
+     */
+    function insertSort (arr) {
+        var temp;
+        for (var i = 1; i < arr.length; i++) {
+            for (var j = i; j > 0; j--) {
+                if (arr[j] < arr[j - 1]) {
+                    temp = arr[j - 1];
+                    arr[j - 1] = arr[j];
+                    arr[j] = temp;
+                } else {
+                    break;
+                }
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * @description 希尔排序>快速>插入
+     */
+    function shellSort (arr) {
+        var temp;
+        var gap = 1;
+        while (gap * 3 + 1 < arr.length) {
+            gap = gap * 3 + 1;
+        }
+        console.log(gap);
+        for (var k = gap; k >= 1; k = Math.floor(k / 3)) {
+            for (var i = k; i < arr.length; i++) {
+                for (var j = i; j > 0; j -= k) {
+                    if (arr[j] < arr[j - k]) {
+                        temp = arr[j - k];
+                        arr[j - k] = arr[j];
+                        arr[j] = temp;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return arr;
+    }
+
+    function calcRunTime (func, arr) {
+        console.time('testForEach');
+        var array = func(arr);
+        console.timeEnd('testForEach');
+        console.log(array);
+    }
+</script>
 </body>
 
 </html>
