@@ -7,10 +7,84 @@
 
 渲染机制
     什么是DOCTYPE及作用
+        DTD(document type definition, 文档类型定义)是一系列的语法规则，用来定义XML或(x)HTML的文件类型。
+        浏览器会根据它来判断文档类型，决定使用何种协议来解析，以及切换浏览器模式
+
+        DOCTYPE是用来声明文档类型和DTD规范的，一个主要的用途便是文件的合法性验证。如果文件代码不合法，那么浏览器解析就会有差错
+        html5:
+            <!DOCTYPE html>
+        html 4.01 Strict 该DTD包含所有html元素和属性，但不包含展示型和弃用的元素(比如font)
+        html 4.01 Transitional ----------------------包含展示型和弃用的元素
     浏览器渲染过程
+        看图，render Tree通过layout,让dom计算知道样式是什么样的，然后paint出来
     重排Reflow
+        DOM结构的各个元素都有自己的盒子，这些都需要浏览器根据各种样式来计算，将元素刚在该放的位置，这就是reflow
+        触发Reflow:
+            当你增加、删除、修改DOM节点，会导致REflow和Repaint
+            当你移动dom位置
+            当你修改css样式
+            当你resize窗口、滚动窗口
     重绘Repaint
+        触发
+            dom改动
+            css改动
+        减少重绘：一次渲染，不要一个节点一个节点的渲染
     布局Layout 
 js运行机制
+    js是单线程的，同一时间只能做一件事
+    任务队列{
+        同步任务，执行完毕才会去执行异步任务
+        异步任务，要挂起，先不执行
+    }
+    setTimeout和setInterval是异步任务
+    异步任务并不会立即执行，而是先记下这些语句，待时机到了，才加入异步队列执行
+    event loop
+        运行栈刚开始都是同步任务，异步任务拿走，到了时间后，放在任务队列中
+        执行完同步任务后，运行栈空了，再去任务队列中去取
+        取完执行后，再去看任务队列中有没有，有就取过来继续执行
+
+    异步任务
+        setTimeout和setInterval
+        dom事件
+        ES6中的Promise
 页面性能
-错误监控 
+    提升页面性能的方法有哪些
+        1.资源压缩合并，减少http请求 也就是减小资源大小
+        2.非核心代码异步加载 => 异步加载的方式 =>异步加载的区别
+            1）异步加载的方式
+                动态脚本加载: 动态script加到DOM中
+                defer 在script标签中设置属性
+                async
+            2）异步加载区别
+                defer是在html解析之后才会执行，如果是多个，按照加载顺序依次执行
+                async是在加载完后立即执行，如果是多个，执行顺序和加载顺序无关
+        3.利用浏览器缓存 => 缓存的分裂 => 缓存的原理
+            1）缓存的分类
+                强缓存（问都不问，直接拿过来用）（如果以下两个服务器都下发了，以后者为准）
+                    Expires 过期的绝对时间（服务器下发的，会有偏差）
+                    Cache-Control 相对时间 3600s内就不请求数据
+                协商缓存（有缓存，但要问下服务器要不要用）
+                    Last-Modified 上次修改的时间
+                    if-Modified-Since
+                    Etag 哈希值
+                    If-None-Match
+
+        4.利用CDN 让网络快速到达服务端，把页面下载起来（尤其第一次进页面，缓存不存在）
+        5.预解析DNS a标签默认打开预解析的，但在https协议下，很多浏览器是关闭的
+            <meta http-equiv="x-dns-prefetch-control" content="on"> // 强制打开a标签的预解析
+            <link rel="dns-prefetch" href="//host_name_to_prefetch.com">
+错误监控
+    前端错误的分类
+        即时运行错误：代码错误
+        资源加载错误
+    错误的捕获方式
+        即时运行错误的捕获方式
+            1）try catch 2)window.onerror
+        资源加载错误的捕获方式
+            1）object.onerror 2)performance.getEntries() 3)Error事件捕获
+            跨域的js运行错误可以捕获吗，错误提示什么，应该怎样处理
+                在script标签增加crossorigin属性
+                设置js资源响应头Access-Control-Allow-Origin:*
+    上报错误的基本原理
+        采用Ajax通信的方式上报
+        利用Image对象上报 （new Image()).src='http://baidu.com'

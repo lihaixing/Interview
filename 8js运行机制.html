@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运行机制</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="./js/defer1.js" defer></script>
+    <script src="./js/defer2.js" defer></script>
+
+    <script src="./js/async1.js" async></script>
+    <script src="./js/async2.js" async></script>
+</head>
+<body>
+<div class="domEvent">
+    你好
+</div>
+<!--<script>-->
+    <!--console.log(1);-->
+    <!--setTimeout(function () {-->
+        <!--console.log(3);-->
+    <!--}, 0);-->
+    <!--console.log(2);-->
+
+    <!--// console.log('A');-->
+    <!--// while (true) {-->
+    <!--//-->
+    <!--// }-->
+    <!--// console.log('B');-->
+
+    <!--for (var i = 0; i < 4; i++) {-->
+        <!--setTimeout(function () {-->
+            <!--console.log(i);-->
+        <!--}, 0);-->
+    <!--}-->
+    <!--// dom事件-->
+    <!--$('.domEvent').html('啦啦啦')-->
+<!--</script>-->
+<script>
+    document.write('<span>this is good</span>')
+</script>
+<script>
+    for (var i = 0; i < 200000; i++) {
+        if (i % 20000 === 0) {
+            console.log(i)
+        }
+    }
+</script>
+</body>
+</html>

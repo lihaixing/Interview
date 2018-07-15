@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>错误捕获</title>
+    <script>
+        // window.onerror = function (e) {
+        //     console.log(e);
+        // };
+        // window.addEventListener('error', function (ev) {
+        //     console.log(ev);
+        // }, true);
+        document.getElementsByTagName('img').onerror = function (e) {
+            console.log(e);
+        }
+    </script>
+</head>
+<body>
+<img src="img/a.png" alt="">
+</body>
+</html>

@@ -1,0 +1,34 @@
+1.了解MVVM框架吗
+    vue.js React.js Angular.js
+    注意事项：
+        一定要想好哪个
+        收住优点，攒着下面说，开启引导模式
+        话别说的太满，低调谨慎
+2.谈谈你对MVVM的认识
+    先聊MVC的认识
+        model view controller
+
+    聊聊MVVM的定义
+        Model: 服务器上的某一块逻辑操作（数据来源）
+        viewModel: vue.js model和view之间的核心枢纽
+        view：页面的展现形态
+
+        注意事项
+            聊聊MVC, 彰显知识面涉猎较多
+            把mvvm的定义说清楚，表达概念理解到位
+            对比mvvm和mvc
+                mvc:view可以直接访问model, 安全性和性能成本
+3.双向绑定是什么原理，可以写出来吗
+    view <=> data
+    绑定就是自动化处理，不需要关心
+    object.defineProperty与reflect.defineProperty区别
+        前者返回修改后的对象，后者返回布尔值
+4.使用了什么设计模式
+    观察者设计模式要了如指掌
+    最好能写出设计模式的伪代码
+    如果没有问道设计模式，也要找时机表现出来
+5.生命周期是什么
+    熟悉对应的几个节点
+    熟记每个节点触发的时机
+    做好多演练一下
+6.你看过源码吗
