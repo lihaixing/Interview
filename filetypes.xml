@@ -2,7 +2,9 @@
   <component name="FileTypeManager" version="17">
     <extensionMap>
       <mapping pattern="3原型链" type="ARCHIVE" />
+      <mapping pattern="MVVM框架" type="PATCH" />
       <mapping pattern="interview2" type="PATCH" />
+      <mapping pattern="10业务能力" type="PATCH" />
       <mapping pattern="5通信类" type="PATCH" />
       <mapping pattern="4" type="PATCH" />
       <mapping pattern="3原型链详解" type="PATCH" />
