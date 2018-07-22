@@ -1,0 +1,62 @@
+@charset "utf-8";
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul, li {
+  list-style: none;
+}
+
+body {
+  background: orange;
+}
+
+.box {
+  margin-top: 5px;
+  margin-left: 5px;
+  display: grid;
+  /* 三个值代表要显示3行 */
+  grid-template-rows: 100px 100px 100px;
+  grid-template-columns: 100px 100px 100px;
+  text-align: center;
+  .item {
+    // grid-column: 1 / 4; //表示占据1-4网格线
+    border: 1px solid red;
+    background: green;
+    margin-left: -1px;
+    margin-top: -1px;
+    text-align: center;
+    &:hover {
+      border-color: blue;
+      //z-index: 100;
+      position: sticky;
+    }
+    &:nth-child(3n+1) {
+      margin-left: 0;
+    }
+  }
+}
+
+.flex-box {
+  display: flex;
+  // 排列方向
+  //flex-direction:row; //row-reverse column column-reverse
+  // 放不下就折行
+  flex-wrap: wrap;
+  //flex-flow： <flex-direction> || <flex-wrap>; 默认值row nowrap
+  width: 300px;
+  margin-top: 5px;
+  margin-left: 5px;
+  .item {
+    width: 100px;
+    height: 100px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    //flex: 1;
+    border: 1px solid red;
+    background: green;
+  }
+}

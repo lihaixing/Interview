@@ -1,0 +1,56 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul, li {
+  list-style: none;
+}
+
+body {
+  background: orange;
+}
+
+.box {
+  margin-top: 5px;
+  margin-left: 5px;
+  display: grid;
+  /* 三个值代表要显示3行 */
+  grid-template-rows: 100px 100px 100px;
+  grid-template-columns: 100px 100px 100px;
+  text-align: center;
+}
+.box .item {
+  border: 1px solid red;
+  background: green;
+  margin-left: -1px;
+  margin-top: -1px;
+  text-align: center;
+}
+.box .item:hover {
+  border-color: blue;
+  position: sticky;
+}
+.box .item:nth-child(3n+1) {
+  margin-left: 0;
+}
+
+.flex-box {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+.flex-box .item {
+  width: 100px;
+  height: 100px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid red;
+  background: green;
+}
+
+/*# sourceMappingURL=nineGrid.css.map */
