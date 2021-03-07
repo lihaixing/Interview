@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--<link rel="stylesheet" href="./css/box.css">-->
+    <link rel="stylesheet" href="http://cdn.xylink.com/public/client/myFolder/static/css/myFolder.d9f155ab.css">
+    <!--<script async src="./js/async2.js"></script>-->
+    <script defer src="./js/defer2.js"></script>
+
+</head>
+
+<body>
+    <div id="box">你的呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃</div>
+    <div id="box">0</div>
+    <div id="box">0</div>
+    <div id="box">0</div>
+    <div id="box">0</div>
+    <div id="box">0</div>
+    <!--<script src="http://cdn.xylink.com/public/client/myFolder/static/js/myFolder.55af954f.js"></script>-->
+    <!--<script async src="./js/defer2.js"></script>-->
+    <div id="box">1</div>
+    <div id="box">1</div>
+    <div id="box">1</div>
+    <div id="box">1</div>
+    <div id="box">1</div>
+    <div id="box">1</div>
+    <!-- 这两个都在domload之前执行 -->
+   
+    <script>
+        setTimeout(()=>{
+            console.log(1111111)
+        },5000)
+
+        // 浏览器没16.67ms 检测一次
+        window.onload = () => {
+            console.log('onload')
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded');
+        })
+
+        // let count = 1;
+        // setTimeout(() => {
+        //     console.log('setTimout')
+        //     document.getElementById('box').innerText = count++;
+        // });
+        // Promise.resolve().then(() => {
+        //     console.log('promise then')
+        //     document.getElementById('box').innerText = count++;
+        // });
+        // function sleep(duration) {
+        //     let start = Date.now();
+
+        //     while (duration + start > Date.now()) {
+
+        //     }
+        // }
+        // for (var i = 0; i < 1000000; i++) {
+        //     document.getElementById('box').innerText = i
+        // }
+        // document.getElementById('box').innerText = 'haha'
+
+        // new Promise((resolve) => {
+        //     sleep(5000)
+        //     resolve()
+        // }).then(() => {
+        //     document.getElementById('box').innerText = "good"
+        // })
+        // setTimeout(()=>{
+        //     document.getElementById('box').innerText = "bad"
+        // },5000)
+        // console.log('主执行栈宏任务');
+
+// Fixfox
+
+// 主执行栈宏任务
+// promise
+// DOMContentLoaded
+// onload
+// setTimout
+
+// chrome
+
+// 主执行栈宏任务
+// promise then
+// DOMContentLoaded
+// setTimout
+// onload
+
+// 执行栈 =》 微任务 》DOMContentLoaded（渲染）
+// onload 和 setTimout要看时间快慢
+    </script>
+
+</body>
+
+</html>

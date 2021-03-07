@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let a = {}, b = '0', c = 0;
+        // a[b] = 'jf';
+        // a[c] = 'jiangfeng';
+        // console.log(a[b]); //jiangfeng  在对象中，数字属性名和字符串属性名相等
+
+        // let a = {}, b = Symbol(1), c = Symbol(1);
+        // a[b] = 'jf';
+        // a[c] = 'jiangfeng';
+        // console.log(a[b]); // jf  
+
+        // let a = {}, b = { m: 1 }, c = { n: 1 };
+        // a[b] = 'jf';
+        // a[c] = 'jiangfeng';
+        // console.log(a[b]); // jiangfeng  引用类型都得转成字符串
+
+        // alert() // alert会转成字符串
+
+        var a = 0, b = 0;
+        function A(a) {
+            A = function (b) {
+                alert(a + b++)
+            }
+            alert(a++)
+        }
+        A(1)  // 1   a++先执行，再加1
+        A(2)  // 4
+    </script>
+
+    <script>
+        console.log('-----深拷贝-----')
+        // 深拷贝
+        var obj = {
+            a: { a1: '122', a2: 123 },
+            b: { b1: new Date(), b2: function () { console.log('b2') } },
+            c: { c1: /\d+/, c2: true, c3: false },
+            d: { d1: Symbol(1), d2: null, d3: undefined }
+        }
+
+        function deepClone(obj) {
+            if (typeof obj !== 'object') return obj;
+            if (obj === null) return null;
+            if (obj.constructor === Date) return new Date(obj);
+            if (obj.constructor === RegExp) return new RegExp(obj);
+            var newObj = new obj.constructor();
+            for (var key in obj) {  // 会遍历原型   x in obj 原型数据也是true
+                if (obj.hasOwnProperty(key)) {
+                    if (typeof obj[key] !== 'object') {
+                        newObj[key] = obj[key];
+                    } else {
+                        newObj[key] = deepClone(obj[key])
+                    }
+                }
+            }
+            return newObj;
+            console.log(deepClone(obj))
+        }
+    </script>
+    <script>
+        console.log('----async await------')
+        // ajax宏任务
+        async function async1() {
+            console.log('async1 start'); //=>2
+            await async2();
+            console.log('async1 end');  //=>6
+        }
+        async function async2() {
+            console.log('async2');  //=>3
+        }
+        console.log('script start');  //=>1
+        setTimeout(function () {
+            console.log('setTimeout');  //=>9
+        }, 0);
+        async1();
+        new Promise(function (resolve) {
+            console.log('promise1');  //=>4
+            resolve();
+        }).then(function () {
+            console.log('promise2');  //=>7
+        }).then(function () {
+            console.log('promise3'); //=>8
+        });
+        console.log('script end');  //=>5
+    </script>
+    <script>
+        // 数据类型转换
+        // 1、对象==字符串   对象.toString()变为字符串
+        // 2、null==undefined  ==> true 但是和其它值比较不相等
+        // 3、NaN==NaN  ===> false   和自己都不相等，别说其它的了
+        // 4、剩下的都转化成数字
+
+        // 对象转数字  先toString()转成字符串 再用Number()
+
+        var a = {
+            i: 0,
+            toString() {
+                return ++this.i
+            }
+        }
+
+        var b = 0;
+        Object.defineProperty(window, 'a', {
+            get: () => {
+                b++;
+                return b;
+            }
+        });
+
+        var a = [1, 2, 3];
+        a.toString = a.shift
+
+        if (a == 1 && a == 2 && a == 3) {
+            console.log('ok')
+        }
+    </script>
+
+    <script>
+        // 数组扁平化
+        const x = [1, 2, 3, [4, 5, [6, 7]]];
+
+        const y = x.flat(Infinity);
+        const z = x.toString().split(',');
+        const z1 = JSON.stringify(x).replace(/[\[\]]/g, '').split(',');
+
+        function flat(x) {
+            if (!Array.isArray(x)) return x;
+            const y = [];
+            for (let i = 0; i < x.length; i++) {
+                if (Array.isArray(x[i])) {
+                    y.push(...flat(x[i]))
+                } else {
+                    y.push(x[i])
+                }
+            }
+            return y;
+        }
+        console.log(y, z, z1, flat(x))
+    </script>
+    <script>
+        // [1,1,2,3,5,8]
+        function lala(num) {
+            if (!/^\d+$/.test(num)) {
+                return null
+            }
+            let x = 1, y = 1;
+            if (num === 0 || num == 1) {
+                return 1
+            }
+            let temp;
+            for (i = 2; i <= num; i++) {
+                temp = y;
+                y = y + x;
+                x = temp;
+            }
+            return y
+        }
+        function lala2(num) {
+            if (!/^\d+$/.test(num)) {
+                return null
+            }
+            let x = 1, y = 1;
+            if (num === 0 || num == 1) {
+                return 1
+            }
+            let temp, i = 2;
+            function fn(x, y) {
+                if (i > num) {
+                    return y;
+                }
+                // temp = y;
+                // y = y + x;
+                // x = temp;
+                i++;
+                return fn(y, y + x);
+            }
+            return fn(x, y)
+        }
+    </script>
+    <script>
+        // 一个证书，计算所有连续数之和
+        function calc(num) {
+            const max = Math.ceil(num / 2);
+            // 1 ~ num-1
+            function plus(x, y) {
+                if (y > num) {
+                    return ['error']
+                }
+                if (y == num) {
+                    return [x];
+                }
+                return [x].concat(plus(x + 1, x + 1 + y))
+            }
+            let arr = [];
+            for (var i = 1; i <= max; i++) {
+                const res = plus(i, i);
+                if (res[res.length - 1] !== 'error') {
+                    arr.push(res)
+                }
+            }
+            return arr;
+        }
+    </script>
+    <script>
+        // // 函数科利华
+        function foo() {
+            console.log(this.a)
+        }
+        var a = 2;
+        foo.call(null);
+
+        function foo(a, b) {
+            console.log(a + b)
+        }
+        // 参数展开
+        foo.apply(null, [2, 3]);
+
+        var bar = foo.bind(null, 2);
+        bar(3) // 5
+
+        // 实现方法
+        // f(1,2,3,4,5) => 15
+        // f(1)(2)(3,4,5) => 15
+        // f(1)(2)(3,4,5) => 15
+        // f(1,2)(3,4,5) => 15
+        // f(1)(2)(3)(4)(5) => 15
+        function foo(a, b, c, d, e) {
+            console.log(a + b + c + d + e)
+        }
+
+        const obj = Object.create(null);
+        let count = 0;
+        function add() {
+            const arg = Array.from(arguments);
+            const length = arg.length;
+            if (arg.length + count < 5) {
+                count += arg.length;
+                return add.bind(obj, ...arg)
+            } else {
+                foo.call(obj, ...arg)
+                count = 0
+            }
+        }
+    </script>
+    <script>
+        function matchStr(str) {
+            const strAray = str.split('');
+            let stack = [];
+            const match={
+                '{':'}',
+                '(':')',
+                '[':']',
+            };
+            for (var i = 0; i < strAray.length; i++) {
+                if (['{', '[', '('].includes(strAray[i])) {
+                    stack.push(strAray[i])
+                } else {
+                    if(match[stack.pop()]!==strAray[i]){
+                        return false
+                    }
+                }
+            }
+            return true
+        }
+    </script>
+</body>
+
+</html>

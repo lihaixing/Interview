@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ajax</title>
+    <!-- <script src="./interviewSource/source/jsonp.js"></script> -->
+    <!-- <script src="./js/jquery-1.12.3.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="./css/5ajax.css">
+    <!--<script src="./interviewSource/source/jsonp.js"></script>-->
+</head>
+
+<body>
+    <section class="playIframe">
+        <article>
+            <h3>这是一个文章</h3>
+        </article>
+        <!--<iframe id="myIframe" src="http://localhost:5001/order/order_list.html" frameborder="0" scrolling="no"></iframe>-->
+    </section>
+    <script>
+        var myIframe = document.getElementById('myIframe');
+        var myIframe2 = document.getElementById('myIframe2');
+
+        /**
+         * @description 这里添加hash后，iframe页面添加window.hashchange事件得到hash，便实现了传递
+         */
+        // setTimeout(function () {
+        //     myIframe.src = myIframe.src + '#' + '来聊天';
+        // }, 2000);
+
+        // postMessage
+        // 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息
+        // setTimeout(function () {
+        //     myIframe.contentWindow.postMessage('data', 'http://192.168.1.4:8888/goods');
+        // }, 1000);
+        // 在窗口B中监听
+        // window.addEventListener('message', function (event) {
+        //     console.log(event.origin);
+        //     console.log(event.source);
+        //     console.log(event.data);
+        // }, false);
+
+        var ws = new WebSocket('ws://localhost:5001/order/order_list.html');
+        ws.onopen = function (evt) {
+            console.log('Connection open ...');
+            // ws.send('Hello WebSockets!');
+        };
+        ws.onmessage = function (evt) {
+            console.log('Received Message: ', evt.data);
+            ws.close();
+        };
+        ws.onclose = function (evt) {
+            console.log('Connection closed.');
+        };
+
+        function extend(dst, obj) {
+            for (var i in obj) {
+                if (obj.hasOwnProperty(i)) {
+                    dst[i] = obj[i];
+                }
+            }
+        }
+
+        function getName(prefix) {
+            return prefix + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+        }
+
+        function jsonAjax(option) {
+            var opt = {
+                type: 'GET',
+                url: '',
+                data: {},
+                success: function (res) {
+                    console.log(JSON.stringify(JSON.parse(res), null, '   '));
+                },
+                error: function (res) {
+                    // res = JSON.parse(res);
+                    console.log(JSON.stringify(res, null, '   '));
+                }
+            };
+            extend(opt, option);
+            var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            console.log('withCredentials' in xhr);
+            var type = opt.type.toUpperCase();
+            var data = opt.data, dataArr = [];
+            for (var k in data) {
+                dataArr.push(k + '=' + data[k]);
+            }
+            if (opt.url) {
+                var url = opt.url;
+                if (type === 'GET') {
+                    url += '?' + dataArr.join('&');
+                    url = url.replace(/\?$/g, '')
+                }
+                if (type === 'POST') {
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                }
+                xhr.open(type, url, true);
+                /*
+                * 这里用onreadystatechange必须用readyState===4;或者用onload
+                * */
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)) {
+                        opt.success(xhr.response);
+                    } else {
+                        opt.error(xhr.response);
+                    }
+                };
+                xhr.send(type === 'POST' ? dataArr.join('&') : null);
+            }
+        }
+
+        function jsonp(option) {
+            var opt = {
+                url: '',
+                data: {},
+                callback: '',
+                success: function (res) {
+                    console.log(res);
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            };
+            extend(opt, option);
+            var url = opt.url;
+            var dataArr = [];
+            var callback = opt.callback + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+            dataArr.push('callback=' + callback);
+            window[callback] = function (res) {
+                opt.success(res);
+            };
+            for (var k in opt.data) {
+                dataArr.push(k + '=' + opt.data[k]);
+            }
+            url = url + '?' + dataArr.join('&');
+            var script = document.createElement('script');
+            script.setAttribute('type', 'text/javascript');
+            script.setAttribute('src', url);
+            script.async = true;
+            document.body.append(script);
+            script.onload = script.onreadystatechange = function () {
+                console.log(script.readyState)
+                if (!script.readyState) {
+                    script.parentNode.removeChild(script);
+                    window[callback] = null;
+                }
+            }
+            script.onerror = function () {
+                opt.error()
+            }
+        }
+
+
+        // $.get(`http://127.0.0.1:7001/api/demoData?t=${new Date().getTime()}`, function (res) {
+        //     console.log(res)
+        // })
+
+        function rename(name) {
+            fetch('https://cloud.xylink.com/api/rest/v3/vods/favorite/4724211?securityKey=5c10c8a2f721ceb7997b6f27bdb3600f1728a39291d', {
+                body: JSON.stringify({ "displayName": name }), // must match 'Content-Type' header
+                // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                // credentials: 'same-origin', // include, same-origin, *omit
+                headers: {
+                    // 'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+                // mode: 'cors', // no-cors, cors, *same-origin
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // *client, no-referrer
+            }).then(response => {
+                console.log(response.json())
+            })
+        }
+        function postName(name) {
+            // fetch('http://127.0.0.1:7001/api/postName', {
+            //     body: JSON.stringify({ name }), // must match 'Content-Type' header
+            //     // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            //     // credentials: 'same-origin', // include, same-origin, *omit
+            //     headers: {
+            //         // 'user-agent': 'Mozilla/4.0 MDN Example',
+            //         'content-type': 'application/json'
+            //     },
+            //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            //     mode: 'no-cors', // no-cors, cors, *same-origin
+            //     // redirect: 'follow', // manual, *follow, error
+            //     // referrer: 'no-referrer', // *client, no-referrer
+            // }).then(response => {
+            //     return response
+            // })
+
+            $.ajax({
+                type: 'POST', // 获取头信息，type=HEAD即可
+                url: "http://127.0.0.1:7001/api/rename",
+                contentType: 'application/json',
+                // beforeSend(xhr){
+                //     xhr.withCredentials=true
+                // },
+                xhrFields:{withCredentials:true},
+                data: JSON.stringify({ name }),
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data)
+                },
+                error: function (err) {
+                    console.log('Error:', err);
+                }
+            });
+        }
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // // 函数科利华
+        // function foo() {
+        //     console.log(this.a)
+        // }
+        // var a = 2;
+        // foo.call(null);
+
+        // function foo(a, b) {
+        //     console.log(a + b)
+        // }
+        // // 参数展开
+        // foo.apply(null, [2, 3]);
+
+        // var bar = foo.bind(null, 2);
+        // bar(3) // 5
+
+        // 实现方法
+        // f(1,2,3,4,5) => 15
+        // f(1)(2)(3,4,5) => 15
+        // f(1)(2)(3,4,5) => 15
+        // f(1,2)(3,4,5) => 15
+        // f(1)(2)(3)(4)(5) => 15
+        function foo(a, b, c, d, e) {
+            console.log(a + b + c + d + e)
+        }
+
+        function add() {
+            const arg = Array.from(arguments);
+            const length = arg.length;
+            if (arg.length < 5) {
+                return add.bind(null, ...arg);  // 能传参是关键
+            } else {
+                foo.call(null, ...arg)
+            }
+        }
+
+        // 不太行
+        // function add() {
+        //     const arg = Array.from(arguments);
+        //     const length = arg.length;
+        //     if (arg.length < 5) {
+        //         return add
+        //     } else {
+        //         foo(...arg)
+        //     }
+        // }
+
+        function benAdd(a) {
+            return function (b) {
+                return function (c) {
+                    console.log(a + b + c)
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>

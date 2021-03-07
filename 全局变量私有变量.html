@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var a = 12, b = 13, c = 14;
+        function fn(a) {
+            // 私有作用域 首先形参赋值 a=12
+            // 然后变量提升 var b;
+            // var function 形参 都是私有变量
+            console.log(a, b, c) // 12 undefined 14
+            var b = c = a = 20;
+            console.log(a, b, c) // 20 20 20
+        }
+        fn(a); // 传入实参12
+        console.log(a, b, c) // 12 13 20
+    </script>
+    <script>
+        console.log(`--------------延伸------------`)
+        var arr = [12, 23];
+        function fn1(arr) {
+            console.log(arr); // [12, 23]
+            arr[0] = 100;
+            arr = [100];
+            arr[0] = 0;
+            console.log(arr); // [0]
+        }
+        fn1(arr);
+        console.log(arr); // [100,23]
+    </script>
+
+    <script>
+        console.log(`--------------作用域链------------`)
+        // 函数得上级作用域是谁，和执行的位置没有关系，和该函数定义的位置有关系
+        var a = 12;
+        function fn2() {
+            console.log(a)  // 12
+            console.log(arguments.callee) // 函数本身
+            console.log(arguments.callee.caller) // 函数在哪调用
+        }
+        function sum() {
+            var a = 20;
+            fn2();
+            console.log(a); //20
+        }
+        sum();
+    </script>
+
+    <script>
+        console.log('---------闭包----------')
+        var n = 10;
+        function fn3() {
+            var n = 20;
+            function fn4() {
+                n++;
+                console.log(n)
+            }
+            fn4();
+            return fn4;
+        }
+        var x = fn3(); // 21
+        x(); //22
+        x(); //23
+        console.log(n); //10
+    </script>
+    <script>
+        function set(x) { console.log(x) };
+        function jieliu(f, interval) {
+            let start = 0;
+            const that = this;
+            return function () {
+                const arg = arguments;
+                const now = Date.now();
+                if (now - start > interval) {
+                    f.apply(that, arg);
+                    start = now;
+                }
+            }
+        }
+
+        function buble(f, interval) {
+            let start = 0;
+            const that = this;
+            let timer;
+            return function () {
+                const arg = arguments;
+                const now = Date.now();
+
+                if (timer) {
+                    clearInterval(timer);
+                }
+
+                if (now - start > interval) {
+                    f.apply(that, arg);
+                    start = now;
+                } else {
+                    timer = setTimeout(function () {
+                        f.apply(that, arg);
+                        const now = Date.now();
+                        start = now;
+                    }, interval - now + start)
+                }
+            }
+        }
+
+        jieliu(set, 1000)
+    </script>
+</body>
+
+</html>

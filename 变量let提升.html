@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <script>
+        // https://www.acfun.cn/v/ac4495641_2
+        // ---------------变量提升--------------------------
+
+        // var 是变量 存在提前申明  同时也会和window存在映射机制(只存在于全局变量和window之间)
+        console.log('var a 前', a); // undefined  没报错，变量提升了
+        console.log('a prev in window', 'a' in window)
+        var a = 5;
+        console.log('var a 后', a);
+        console.log('a after in window', 'a' in window)
+
+        // 没有var 不是变量 就不存在变量提升  相当于 window.b=12
+        // console.log(b)  // 报错
+        console.log('b prev in window', 'b' in window) // false
+        b = 9;
+        console.log(b)
+        console.log('b ater in window', 'b' in window)  // true
+
+        var c = d = 10; // d 不带var
+
+        // 带function的提前申明和定义 // 变量提升只发生在当前作用域 看似函数，其实就是赋值了一堆字符串
+        var f1 = () => {
+            console.log(2)
+        }
+        function f1() {
+            console.log(1)
+        }
+        f1(); // 2
+
+
+        // 占内存  变量
+        // 堆内存  引用类型
+    </script> -->
+
+    <!-- <script>
+        console.log('---------------函数内部变量提升---------------------')
+        // 题
+        console.log(a, b);  // undefined undefined
+        var a = 12, b = 12;
+        function fn() {
+            console.log(a, b); // undefined 12      // 私有变量不带var 向上级索取
+            var a = b = 13;
+            console.log(a, b) // 13 13
+        }
+        fn();
+        console.log(a, b); // 12 13
+    </script> -->
+
+    <script>
+        console.log('---------------条件语句中的变量提升---------------------')
+        console.log(c); // undefined
+        console.log(f1); // undefined  变量提升了 但只是声明，不定义
+        if (1) {
+            console.log(f1); // 1=> function(){}  如果条件成立，在块级作用域中，先把变量提升的函数赋值（因为之前只是声明了，没有赋值）
+            var c = 2;
+            function f1() {
+                console.log('f1');
+            }
+        }
+        console.log(f1); // 0=>undefined 1=>funciton(){}
+        console.log(c);  // 0=>undefined 1=>2
+    </script>
+
+    <!-- <script>
+        console.log('----------------条件判断函数变量提升----------------')
+        f = function () { return true }
+        g = function () { return false }
+        ~function () {
+            if (g() && [] == ![]) {  // 这里会报错    [] == ![] true
+                f = function () { return false }
+                function g() {
+                    return true
+                }
+            }
+        }();
+        console.log('f()', f())
+        console.log('g()', g())
+
+    </script> -->
+
+    <!-- <script>
+        console.log('--------------重命名----------------------')
+        // 1、var和function名称重复会相互覆盖
+        ff() // ff
+        var ff =12;
+        ff()  // 报错
+        function ff(){
+            console.log('ff')
+        }
+        ff() // 报错
+
+        // 2、var和function名称重复会相互覆盖
+        ff() // ff
+        function ff(){
+            console.log('ff')
+        }
+        ff()  // ff
+        var ff =12;
+        ff() // 报错
+
+        fn();  // 4
+        function fn() { console.log(1) }
+        fn(); // 4
+        function fn() { console.log(2) }
+        fn(); // 4
+        var fn = 2;
+        fn(); // not function error
+        function fn() { console.log(3) }
+        fn(); // not function error
+        function fn() { console.log(4) }
+        fn(); // not function error
+    </script> -->
+
+    <!-- <script>
+        console.log('-----------------let const -------------')
+        // let const 不存在变量提升 且和window切断映射
+
+        // console.log(l); // error
+        let l = 5;
+        console.log('window.l', window.l) // undefined
+        console.log('l in window', 'l' in window) // false
+
+        // 浏览器执行之前会检测使用let得变量, 会提前报错
+        let a=12;
+        a=12;
+        console.log(a) // 报错
+        let a=13; // 报错，已经声明了
+        var a=13; // 报错
+
+        var b=12;
+        let b=13; // 报错
+
+        let a = 10, b = 10;
+        let fn = function () {
+            // console.log(a) // 报错
+            console.log(b) // 10
+            let a = b = 20
+            console.log(a) // 20
+            console.log(b) // 20
+        }
+        fn()
+        console.log(a, b) // 10 20
+    </script> -->
+
+    <script>
+        console.log('-------------暂时性死区(bug)-----------');
+        var a = 12;
+        if (true) {  // let会形成{}块级作用域
+            // console.log(a);  // 报错
+            let a = 13;
+            console.log(a) // 13
+        }
+        console.log(a)  // 12
+
+
+        console.log('k',typeof k)  // bug undefined
+
+        // console.log(typeof i)  // 报错
+        let i;
+        console.log(i)  // undefined
+    </script>
+</body>
+
+</html>

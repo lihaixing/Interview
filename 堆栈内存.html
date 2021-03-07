@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script></script>
+        /**
+         * 堆内存：存储引用数据类型值（对象：键值对，函数：代码字符串）
+         * 1) 堆内存释放 让引用堆内存地址的变量赋值为null
+         * 栈内存：提供js代码执行环境，存储基本类型值
+         * 1) 栈内存释放：当函数执行完成, 所形成的私有作用域自动释放,
+         *      但如果栈内存某内容被栈内存以外的变量引用了，就不能释放
+         * 2) 全局栈内存只有页面关闭才能释放
+         *
+         **/
+
+        setTimeout(() => {
+            console.log('timer1')
+
+            new Promise((resolve)=>{
+                resolve()
+            }).then(function () {
+                console.log('promise1')
+            })
+        }, 0)
+
+        setTimeout(() => {
+            console.log('timer2')
+
+            new Promise((resolve)=>{
+                resolve()
+            }).then(function () {
+                console.log('promise2')
+            })
+        }, 0)
+    </script>
+</body>
+
+</html>
