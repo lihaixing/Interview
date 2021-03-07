@@ -1,113 +1,88 @@
 html * {
   padding: 0;
-  margin: 0;
-}
+  margin: 0; }
 
 .layout article div {
-  min-height: 100px;
-}
+  min-height: 100px; }
 .layout.float .left {
   float: left;
   width: 300px;
-  background: red;
-}
+  background: red; }
 .layout.float .right {
   width: 300px;
   background: blue;
-  float: right;
-}
+  float: right; }
 .layout.float .center {
-  background: yellow;
-}
+  background: yellow; }
 .layout.absolute {
-  margin-top: 20px;
-}
-.layout.absolute article {
-  position: relative;
-  min-height: 100px;
-  min-width: 600px;
-}
-.layout.absolute article .left {
-  position: absolute;
-  width: 300px;
-  background: red;
-  left: 0;
-  top: 0;
-}
-.layout.absolute article .right {
-  width: 300px;
-  background: blue;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.layout.absolute article .center {
-  left: 300px;
-  right: 300px;
-  position: absolute;
-  background: yellow;
-}
+  margin-top: 20px; }
+  .layout.absolute article {
+    position: relative;
+    min-height: 100px;
+    min-width: 600px; }
+    .layout.absolute article .left {
+      position: absolute;
+      width: 300px;
+      background: red;
+      left: 0;
+      top: 0; }
+    .layout.absolute article .right {
+      width: 300px;
+      background: blue;
+      position: absolute;
+      right: 0;
+      top: 0; }
+    .layout.absolute article .center {
+      left: 300px;
+      right: 300px;
+      position: absolute;
+      background: yellow; }
 .layout.flexBox {
-  margin-top: 20px;
-}
-.layout.flexBox article {
-  display: flex;
-  min-width: 600px;
-}
-.layout.flexBox article .left {
-  width: 300px;
-  flex: 0 0 300px;
-  background: red;
-}
-.layout.flexBox article .right {
-  width: 300px;
-  background: blue;
-  flex: 0 0 300px;
-}
-.layout.flexBox article .center {
-  flex: 1 1 auto;
-  background: yellow;
-}
+  margin-top: 20px; }
+  .layout.flexBox article {
+    display: flex;
+    min-width: 600px; }
+    .layout.flexBox article .left {
+      width: 300px;
+      flex: 0 0 300px;
+      background: red; }
+    .layout.flexBox article .right {
+      width: 300px;
+      background: blue;
+      flex: 0 0 300px; }
+    .layout.flexBox article .center {
+      flex: 1 1 auto;
+      background: yellow; }
 .layout.table {
-  margin-top: 20px;
-}
-.layout.table article {
-  display: table;
-  min-width: 600px;
-  width: 100%;
-}
-.layout.table article .left {
-  display: table-cell;
-  width: 300px;
-  background: red;
-}
-.layout.table article .right {
-  width: 300px;
-  display: table-cell;
-  background: blue;
-}
-.layout.table article .center {
-  background: yellow;
-  display: table-cell;
-}
+  margin-top: 20px; }
+  .layout.table article {
+    display: table;
+    min-width: 600px;
+    width: 100%; }
+    .layout.table article .left {
+      display: table-cell;
+      width: 300px;
+      background: red; }
+    .layout.table article .right {
+      width: 300px;
+      display: table-cell;
+      background: blue; }
+    .layout.table article .center {
+      background: yellow;
+      display: table-cell; }
 .layout.grid {
-  margin-top: 20px;
-}
-.layout.grid article {
-  display: grid;
-  min-width: 600px;
-  width: 100%;
-  grid-template-rows: 100px;
-  grid-template-columns: 300px auto 300px;
-}
-.layout.grid article .left {
-  background: red;
-}
-.layout.grid article .right {
-  background: blue;
-}
-.layout.grid article .center {
-  background: yellow;
-}
+  margin-top: 20px; }
+  .layout.grid article {
+    display: grid;
+    min-width: 600px;
+    width: 100%;
+    grid-template-rows: 100px;
+    grid-template-columns: 300px auto 300px; }
+    .layout.grid article .left {
+      background: red; }
+    .layout.grid article .right {
+      background: blue; }
+    .layout.grid article .center {
+      background: yellow; }
 
 /*# sourceMappingURL=layout.css.map */

@@ -1,23 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>js运行机制</title>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="./js/defer1.js" defer></script>
+    <link rel="dns-prefetch" href="//cdn.xylink.com">
+
+    <link rel="preconnect" href="//cdn.xylink.com" crossorigin>
+
+     <!--<link rel="prefetch" href="//cdn.xylink.com/public/client/myFolder/index.html?userInEnterprise=true&version=2.29.22-55461&securityKey=e634b7a3994af897bd060ada23209e921737c4de1a8&random9669=1&locale=zh-CN#/" as="html" crossorigin>   &lt;!&ndash; crossorigin="use-credentials" &ndash;&gt;-->
+    <!-- <link rel="prerender" href="//example.com/next-page.html"> -->
+    <!-- <link rel="preload" href="/styles/other.css" as="style"> -->
+
+    <link rel="stylesheet" href="./js/layout.css?a=1">
+    <!-- <script src="./js/defer1.js" defer></script> -->
+    
+
+    <!-- <script src="./js/async1.js" async></script> -->
+    <!--<script src="https://precdn.xylink.com/vconsole.min.js"></script>-->
+    <!--<script>-->
+        <!--new VConsole();-->
+    <!--</script>-->
+    <script src="./js/async2.js" async></script>
     <script src="./js/defer2.js" defer></script>
 
-    <script src="./js/async1.js" async></script>
-    <script src="./js/async2.js" async></script>
 </head>
+
 <body>
-<div class="domEvent">
-    你好
-</div>
-<!--<script>-->
+    
+    <!-- <script defer>
+        console.log('deffter test')
+        function func1(param) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(1)
+                }, 1000)
+            })
+        }
+        function func2(param) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(param+1)
+                }, 1000)
+            })
+        }
+        function func3(param) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(param+2)
+                }, 1000)
+            })
+        }
+
+        func1().then(res=>{
+            return func2(res)
+        }).then(res=>{
+            return func3(res)
+        }).then(res=>{
+            console.log(res)
+        })
+
+        setTimeout(()=>{
+            console.log('setTimeout')
+        },10)
+
+    </script> -->
+    <script>
+        window.onload = () => {
+            console.log('onload')
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded');
+        })
+        console.log(111)
+    </script>
+    <div class="domEvent">
+        你好
+    </div>
+    <a href="http://cdn.xylink.com/public/client/myFolder/index.html?userInEnterprise=true&version=2.29.22-55461&securityKey=e634b7a3994af897bd060ada23209e921737c4de1a8&random9669=1&locale=zh-CN#/">文件夹</a>
+    <!--<script>-->
     <!--console.log(1);-->
     <!--setTimeout(function () {-->
-        <!--console.log(3);-->
+    <!--console.log(3);-->
     <!--}, 0);-->
     <!--console.log(2);-->
 
@@ -28,22 +92,31 @@
     <!--// console.log('B');-->
 
     <!--for (var i = 0; i < 4; i++) {-->
-        <!--setTimeout(function () {-->
-            <!--console.log(i);-->
-        <!--}, 0);-->
+    <!--setTimeout(function () {-->
+    <!--console.log(i);-->
+    <!--}, 0);-->
     <!--}-->
     <!--// dom事件-->
     <!--$('.domEvent').html('啦啦啦')-->
-<!--</script>-->
-<script>
-    document.write('<span>this is good</span>')
-</script>
-<script>
-    for (var i = 0; i < 200000; i++) {
-        if (i % 20000 === 0) {
-            console.log(i)
+    <!--</script>-->
+
+
+    <div>你搞</div>
+    
+    <script>
+        for (var i = 0; i < 20000000; i++) {
+            if (i % 20000 === 0) {
+                // console.log(i)
+            }
         }
-    }
-</script>
+    // setTimeout(()=>{
+    //     $('.domEvent').css('background','green')
+    // },5000)
+
+
+    </script>
+    <!-- <link rel="stylesheet" href="./js/layout.css?a=1"> -->
+    <script src="./js/jquery-1.12.3.min.js"></script>
 </body>
+
 </html>

@@ -26,6 +26,11 @@
         },false);
         document.body.addEventListener('click',function (e) {
             console.log('body capture')
+            e.stopImmediatePropagation()
+        },false);
+
+        document.body.addEventListener('click',function (e) {
+            console.log('body capture2')
         },false);
 
         // 展示顺序 按捕获流程 true改为false就成了冒泡
